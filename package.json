@@ -4,6 +4,7 @@
   "description": "ETL Jobs qui chargent les données de parking de la VQ",
   "dependencies": {
     "JSONStream": "^0.9.0",
+    "nano": "^5.11.0",
     "readline": "0.0.3",
     "stream": "0.0.1"
   }

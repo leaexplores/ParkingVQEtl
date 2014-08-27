@@ -2,7 +2,7 @@
    "language": "javascript",
    "views": {
        "keys": {
-           "map": "function(doc) {\n  if (doc.properties.TYPE)\n  \temit(doc.properties.TYPE, null);\n  else\n\t{\n\t\tif (doc.properties.type)\n\t\t\temit(doc.properties.type, null);\n\t}\n}"
+           "map": "function(doc) {\n  if (doc.properties.TYPE)\n\temit(doc.properties.TYPE, null);\n  else\n\t{\n\t\tif (doc.properties.type)\n\t\t\temit(doc.properties.type, null);\n\t\telse\n\t\t{\n\t\t\tif (doc.properties.TYPE_SRC)\n\t\t\t\temit(doc.properties.TYPE_SRC, null);\n\t\t}\n\t}\n}"
        }
    }
 }
