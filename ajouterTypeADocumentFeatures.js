@@ -6,7 +6,7 @@ var stream = require('stream');
 var JSONStream = require('JSONStream');
 
 var nano = require('nano')('http://localhost:5984');
-var db_name = "geojson_api";
+var db_name = "parking_api";
 var db = nano.use(db_name);
 
 // Nom du fichier à traiter!
