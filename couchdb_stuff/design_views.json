@@ -1,0 +1,8 @@
+{
+   "language": "javascript",
+   "views": {
+       "keys": {
+           "map": "function(doc) {\n  if (doc.properties.TYPE)\n  \temit(doc.properties.TYPE, null);\n  else\n\t{\n\t\tif (doc.properties.type)\n\t\t\temit(doc.properties.type, null);\n\t}\n}"
+       }
+   }
+}
