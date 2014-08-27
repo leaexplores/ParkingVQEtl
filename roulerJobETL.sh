@@ -14,3 +14,6 @@ node ajouterTypeADocumentFeatures.js data/PANNEAU_S.GEOJSON PANNEAU_S
 
 # Chargement de chacune des features.
 node loadDocumentFeaturesAsPoints.js out/data/PANNEAU_S.GEOJSON
+
+# Démarage de la génération de la génération de la vue.
+curl -X GET http://localhost:5984/parking_api/_design/nodejs/_view/keys?limit=0
