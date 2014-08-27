@@ -1,0 +1,10 @@
+{
+  "name": "ParkingAPI_ETL",
+  "version": "0.0.1",
+  "description": "ETL Jobs qui chargent les données de parking de la VQ",
+  "dependencies": {
+    "JSONStream": "^0.9.0",
+    "readline": "0.0.3",
+    "stream": "0.0.1"
+  }
+}
