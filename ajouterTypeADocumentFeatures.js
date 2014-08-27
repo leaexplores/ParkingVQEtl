@@ -5,10 +5,6 @@ var readline = require('readline');
 var stream = require('stream');
 var JSONStream = require('JSONStream');
 
-var nano = require('nano')('http://localhost:5984');
-var db_name = "parking_api";
-var db = nano.use(db_name);
-
 // Nom du fichier à traiter!
 var filename = process.argv[2];
 var typeAdd = process.argv[3];
