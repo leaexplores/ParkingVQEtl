@@ -47,23 +47,28 @@ function extraiteHeuresDebutEtFin(doc) {
                 splitRegex[iCpt] = splitRegex[iCpt].trim();
             }
             heuresAutorise = [];
+
             if (splitRegex.length % 2 === 0) {
             for (iCpt = 0; iCpt < splitRegex.length; iCpt = iCpt + 2) {
-                heuresAutorise[iCpt] = []
+                var insToDo = [];
                 // Heure de debut
                 if (splitRegex[iCpt].indexOf("h") > -1 || splitRegex[iCpt].indexOf("H") > -1)
-                    heuresAutorise[iCpt][0] = splitRegex[iCpt].substr(0, splitRegex[iCpt].toUpperCase().indexOf("H"));
+                    insToDo[0] = splitRegex[iCpt].substr(0, splitRegex[iCpt].toUpperCase().indexOf("H"));
                 else
-                    heuresAutorise[iCpt][0] = splitRegex[iCpt];
+                    insToDo[0] = splitRegex[iCpt];
                 // Heure de fin
                 if (splitRegex[iCpt + 1].indexOf("h") > -1 || splitRegex[iCpt + 1].indexOf("H") > -1)
-                    heuresAutorise[iCpt][1] = splitRegex[iCpt + 1].substr(0, splitRegex[iCpt + 1].toUpperCase().indexOf("H"));
+                    insToDo[1] = splitRegex[iCpt + 1].substr(0, splitRegex[iCpt + 1].toUpperCase().indexOf("H"));
                 else
-                    heuresAutorise[iCpt][1] = splitRegex[iCpt + 1];
+                    insToDo[1] = splitRegex[iCpt + 1];
+
+                heuresAutorise.push(insToDo);
             } }
             else {
                 console.log('Warning heures de parking en.. '+ splitRegex.length + ' - ' + splitRegex);
             }
+
+
 
             return heuresAutorise;
         }
