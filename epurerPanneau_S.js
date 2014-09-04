@@ -67,9 +67,6 @@ function extraiteHeuresDebutEtFin(doc) {
             else {
                 console.log('Warning heures de parking en.. '+ splitRegex.length + ' - ' + splitRegex);
             }
-
-
-
             return heuresAutorise;
         }
     }
