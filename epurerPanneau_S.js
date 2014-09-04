@@ -14,6 +14,19 @@ var realGeoJsonDoc = {
     "features": []
 };
 
+
+function extractNbMinAutoriseFromProps(doc) {
+    var regex = /[1-9].*min+/g;
+    if (doc.properties.TYPE_DESC !== undefined && doc.properties.TYPE_DESC.indexOf("min") > -1) {
+        var outId = regex.exec(doc.properties.TYPE_DESC);
+        if (outId !== null && outId !== undefined && outId.indexOf("-") === -1) {
+            return outId[0];
+        }
+    } else {
+        return undefined;
+    }
+}
+
 function streamJsonToCouch(pFilename) {
     var stream = fs.createReadStream(pFilename, {
             encoding: 'utf8'
@@ -29,7 +42,10 @@ function streamJsonToCouch(pFilename) {
         } else {
             if (data.properties.TYPE_DESC !== undefined && (data.properties.TYPE_DESC.indexOf("MIN") > -1 || data.properties.TYPE_DESC.indexOf("min") > -1 || data.properties.TYPE_DESC.indexOf("H") > -1 || data.properties.TYPE_DESC.indexOf("h") > -1)) {
                 console.log('hit stationnement zone limite');
+                // Creation de props :)
                 data.properties.STATIONEMENT_LIMITE = true;
+                data.properties.NB_MINUTES_AUTORISE = extractNbMinAutoriseFromProps(data);
+
                 realGeoJsonDoc.features.push(data);
             } else {
                 realGeoJsonDoc.features.push(data);
