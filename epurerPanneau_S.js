@@ -36,13 +36,21 @@ function extraiteHeuresDebutEtFin(doc) {
         if (runRegex !== undefined && runRegex !== null) {
             splitRegex = runRegex[0].split("-");
             // Trim the dataset...
-            for (iCpt = 0; iCpt < splitRegex.length; iCpt = iCpt + 1)
-            {
+            for (iCpt = 0; iCpt < splitRegex.length; iCpt = iCpt + 1) {
                 splitRegex[iCpt] = splitRegex[iCpt].trim();
             }
 
+            for (iCpt = 0; iCpt < splitRegex.length; iCpt = iCpt + 2) {
+                if (splitRegex[iCpt].indexOf("h") > -1 || splitRegex[iCpt].indexOf("H") > -1)
+                    heuresAutorise[iCpt][0] = splitRegex[iCpt].substr(0, splitRegex[iCpt].toUpperCase().indexOf("H"));
+                else
+                    heuresAutorise[iCpt][0] = splitRegex[iCpt];
 
-
+                if (splitRegex[iCpt + 1].indexOf("h") > -1 || splitRegex[iCpt + 1].indexOf("H") > -1)
+                    heuresAutorise[iCpt][1] = splitRegex[iCpt + 1].substr(0, splitRegex[iCpt + 1].toUpperCase().indexOf("H"));
+                else
+                    heuresAutorise[iCpt][1] = splitRegex[iCpt + 1];
+            }
         }
     }
 }
@@ -61,7 +69,7 @@ function streamJsonToCouch(pFilename) {
             ///console.log('hit rtc data skipping it');
         } else {
             if (data.properties.TYPE_DESC !== undefined && (data.properties.TYPE_DESC.indexOf("MIN") > -1 || data.properties.TYPE_DESC.indexOf("min") > -1 || data.properties.TYPE_DESC.indexOf("H") > -1 || data.properties.TYPE_DESC.indexOf("h") > -1)) {
-              //  console.log('hit stationnement zone limite');
+                //  console.log('hit stationnement zone limite');
                 // Creation de props :)
                 data.properties.STATIONEMENT_LIMITE = true;
                 data.properties.NB_MINUTES_AUTORISE = extractNbMinAutoriseFromProps(data);
