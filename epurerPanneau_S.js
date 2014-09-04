@@ -41,18 +41,23 @@ function extraiteHeuresDebutEtFin(doc) {
             }
 
             for (iCpt = 0; iCpt < splitRegex.length; iCpt = iCpt + 2) {
+                // Heure de debut
                 if (splitRegex[iCpt].indexOf("h") > -1 || splitRegex[iCpt].indexOf("H") > -1)
                     heuresAutorise[iCpt][0] = splitRegex[iCpt].substr(0, splitRegex[iCpt].toUpperCase().indexOf("H"));
                 else
                     heuresAutorise[iCpt][0] = splitRegex[iCpt];
-
+                // Heure de fin
                 if (splitRegex[iCpt + 1].indexOf("h") > -1 || splitRegex[iCpt + 1].indexOf("H") > -1)
                     heuresAutorise[iCpt][1] = splitRegex[iCpt + 1].substr(0, splitRegex[iCpt + 1].toUpperCase().indexOf("H"));
                 else
                     heuresAutorise[iCpt][1] = splitRegex[iCpt + 1];
             }
+
+            return heuresAutorise;
         }
     }
+
+    return undefined;
 }
 
 function streamJsonToCouch(pFilename) {
