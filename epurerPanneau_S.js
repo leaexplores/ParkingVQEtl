@@ -28,19 +28,28 @@ function extractNbMinAutoriseFromProps(doc) {
 }
 
 function extraiteHeuresDebutEtFin(doc) {
-    var runRegex, regex, splitRegex, iCpt, heuresAutorise;
+    var runRegex, regex, firstSplit, splitRegex, iCpt, heuresAutorise;
     // Regex pour extraire les heures !!
     var regex = /([0-9]+h).(-*).*[0-9]([0-9])?h([0-9])?([0-9])?/
     if (doc.properties.TYPE_DESC !== undefined && (doc.properties.TYPE_DESC.indexOf("H") > -1 || doc.properties.TYPE_DESC.indexOf("h") > -1)) {
         var runRegex = regex.exec(doc.properties.TYPE_DESC);
         if (runRegex !== undefined && runRegex !== null) {
-            splitRegex = runRegex[0].split("-");
+            splitRegex = [];
+            firstSplit = runRegex[0].split("-");
+            for (iCpt = 0; iCpt < firstSplit.length; iCpt = iCpt + 1) {
+                var tempSplit = firstSplit[iCpt].split(",");
+                for (var jCpt = 0; jCpt < tempSplit.length; jCpt++) {
+                       splitRegex.push(tempSplit[jCpt]);
+                }
+            }
             // Trim the dataset...
             for (iCpt = 0; iCpt < splitRegex.length; iCpt = iCpt + 1) {
                 splitRegex[iCpt] = splitRegex[iCpt].trim();
             }
-
+            heuresAutorise = [];
+            if (splitRegex.length % 2 === 0) {
             for (iCpt = 0; iCpt < splitRegex.length; iCpt = iCpt + 2) {
+                heuresAutorise[iCpt] = []
                 // Heure de debut
                 if (splitRegex[iCpt].indexOf("h") > -1 || splitRegex[iCpt].indexOf("H") > -1)
                     heuresAutorise[iCpt][0] = splitRegex[iCpt].substr(0, splitRegex[iCpt].toUpperCase().indexOf("H"));
@@ -51,6 +60,9 @@ function extraiteHeuresDebutEtFin(doc) {
                     heuresAutorise[iCpt][1] = splitRegex[iCpt + 1].substr(0, splitRegex[iCpt + 1].toUpperCase().indexOf("H"));
                 else
                     heuresAutorise[iCpt][1] = splitRegex[iCpt + 1];
+            } }
+            else {
+                console.log('Warning heures de parking en.. '+ splitRegex.length + ' - ' + splitRegex);
             }
 
             return heuresAutorise;
@@ -78,6 +90,7 @@ function streamJsonToCouch(pFilename) {
                 // Creation de props :)
                 data.properties.STATIONEMENT_LIMITE = true;
                 data.properties.NB_MINUTES_AUTORISE = extractNbMinAutoriseFromProps(data);
+                data.properties.HEURES_AUTORISE = extraiteHeuresDebutEtFin(data);
 
                 realGeoJsonDoc.features.push(data);
             } else {
