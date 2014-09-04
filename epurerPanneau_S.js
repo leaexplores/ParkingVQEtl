@@ -39,7 +39,7 @@ function extraiteHeuresDebutEtFin(doc) {
             for (iCpt = 0; iCpt < firstSplit.length; iCpt = iCpt + 1) {
                 var tempSplit = firstSplit[iCpt].split(",");
                 for (var jCpt = 0; jCpt < tempSplit.length; jCpt++) {
-                       splitRegex.push(tempSplit[jCpt]);
+                    splitRegex.push(tempSplit[jCpt]);
                 }
             }
             // Trim the dataset...
@@ -49,23 +49,40 @@ function extraiteHeuresDebutEtFin(doc) {
             heuresAutorise = [];
 
             if (splitRegex.length % 2 === 0) {
-            for (iCpt = 0; iCpt < splitRegex.length; iCpt = iCpt + 2) {
-                var insToDo = [];
-                // Heure de debut
-                if (splitRegex[iCpt].indexOf("h") > -1 || splitRegex[iCpt].indexOf("H") > -1)
-                    insToDo[0] = splitRegex[iCpt].substr(0, splitRegex[iCpt].toUpperCase().indexOf("H"));
-                else
-                    insToDo[0] = splitRegex[iCpt];
-                // Heure de fin
-                if (splitRegex[iCpt + 1].indexOf("h") > -1 || splitRegex[iCpt + 1].indexOf("H") > -1)
-                    insToDo[1] = splitRegex[iCpt + 1].substr(0, splitRegex[iCpt + 1].toUpperCase().indexOf("H"));
-                else
-                    insToDo[1] = splitRegex[iCpt + 1];
+                for (iCpt = 0; iCpt < splitRegex.length; iCpt = iCpt + 2) {
+                    var insToDo = [];
+                    // Heure de debut
+                    if (splitRegex[iCpt].indexOf("h") > -1 || splitRegex[iCpt].indexOf("H") > -1)
+                        insToDo[0] = splitRegex[iCpt].substr(0, splitRegex[iCpt].toUpperCase().indexOf("H"));
+                    else
+                        insToDo[0] = splitRegex[iCpt];
+                    // Heure de fin
+                    if (splitRegex[iCpt + 1].indexOf("h") > -1 || splitRegex[iCpt + 1].indexOf("H") > -1)
+                        insToDo[1] = splitRegex[iCpt + 1].substr(0, splitRegex[iCpt + 1].toUpperCase().indexOf("H"));
+                    else
+                        insToDo[1] = splitRegex[iCpt + 1];
 
+                    heuresAutorise.push(insToDo);
+                }
+            } else {
+                // Trying deuxieme startegie...
+                // Exemple data en probleme  6h,9h 15h,18h
+                // Premier jeux d'heure...
+                var thatSplit = splitRegex[1].split(" ");
+                var insToDo = [];
+                insToDo[0] = splitRegex[0].substr(0, splitRegex[0].toUpperCase().indexOf("H"));
+                insToDo[1] = thatSplit[0].trim().substr(0, thatSplit[0].toUpperCase().indexOf("H"));
                 heuresAutorise.push(insToDo);
-            } }
-            else {
-                console.log('Warning heures de parking en.. '+ splitRegex.length + ' - ' + splitRegex);
+                insToDo[1] = splitRegex[2].substr(0, splitRegex[2].toUpperCase().indexOf("H"));
+                insToDo[0] = thatSplit[1].trim().substr(0, thatSplit[1].toUpperCase().indexOf("H"));
+                heuresAutorise.push(insToDo);
+                if (!isNaN(heuresAutorise[0][0]) && !isNaN(heuresAutorise[0][1]) && !isNaN(heuresAutorise[1][0]) && !isNaN(heuresAutorise[1][1]) && heuresAutorise[0][0].length > 0 && heuresAutorise[0][1].length > 0 && heuresAutorise[1][0].length > 0 && heuresAutorise[1][1].length > 0) {
+                    return heuresAutorise;
+                } else {
+                    console.log('Warning heures de parking en.. ' + heuresAutorise);
+                    return undefined;
+                }
+
             }
             return heuresAutorise;
         }
