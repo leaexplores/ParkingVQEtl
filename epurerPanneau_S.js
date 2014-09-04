@@ -23,7 +23,6 @@ function streamJsonToCouch(pFilename) {
     stream.pipe(parser);
 
     parser.on('data', function (data) {
-        data.properties.TYPE_SRC = typeAdd;
         // Si c'est un arret RTC on s'en criss....
         if (data.properties.TYPE_DESC !== undefined && data.properties.TYPE_DESC.indexOf("RTC") > -1) {
             console.log('hit rtc data skipping it');
