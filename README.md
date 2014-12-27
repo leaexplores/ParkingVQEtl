@@ -4,6 +4,8 @@ This project was initially a PoC about using open data from Ville de Quebec to f
 
 This project is a series of ETL scripts that are used to feed in the API.
 
+* The raw data is put in the ./data directory.
+
 Copyright (C) 2014 Mathieu Rhéaume
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
